@@ -3,6 +3,7 @@ package com.anheinno.magadapter.lib;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.util.Hashtable;
 import java.util.zip.GZIPOutputStream;
 
@@ -48,14 +49,33 @@ public abstract class MAGServer extends HttpServlet {
 		ServletContext context = getServletContext();
 		String log = config.getInitParameter("log");
 		if (log != null) {
-			MAGConfig.setLOG_DIR(context.getRealPath(log));
+			MAGConfig.setLogDir(context.getRealPath(log));
 		} else {
-			MAGConfig.setLOG_DIR(context.getRealPath("log"));
+			MAGConfig.setLogDir(context.getRealPath("log"));
 		}
 		
 		String expire_hours = config.getInitParameter("expire");
 		if(expire_hours != null) {
 			MAGConfig.setDefaultExpireHours(Integer.parseInt(expire_hours));
+		}
+		
+		String push_uri = config.getInitParameter("push-uri");
+		if(push_uri != null) {
+			try {
+				MAGConfig.setPushEngineURI(new URI(push_uri));
+			}catch(final Exception e) {
+				throw new ServletException("illegal Push Engine Service URI(push-uri): " + push_uri);
+			}
+		}
+		
+		String compress_auto = config.getInitParameter("compress-auto");
+		if(compress_auto != null) {
+			MAGConfig.enableAutoCompressContent(compress_auto.equalsIgnoreCase("TRUE"));
+		}
+		
+		String compress_threshold = config.getInitParameter("compress-threshold");
+		if(compress_threshold != null) {
+			MAGConfig.setAutoCompressThreashold(Integer.parseInt(compress_threshold));
 		}
 
 		_handler_table = new Hashtable<String, IMAGHandler>();
@@ -130,8 +150,8 @@ public abstract class MAGServer extends HttpServlet {
 		MAGRequest req = new MAGRequest(request);
 		PrintWriter out = resp.getWriter();
 
-		MAGLog.log(req, "Log dir: " + MAGConfig.getLOG_DIR());
-		MAGLog.log(req, "URL: " + req.getURL());
+		//MAGLog.log(req, "Log dir: " + MAGConfig.getLogDir());
+		//MAGLog.log(req, "URL: " + req.getURL());
 		MAGLog.log(req, "Start!");
 
 		disableCache(resp);
@@ -163,15 +183,15 @@ public abstract class MAGServer extends HttpServlet {
 					boolean compressed = false;
 					
 					if (!req.isRequestByPushServer() && (req.isGZip() || 
-						(MAGConfig.getCOMPRESS_AUTO() 
-						&& req.getResponse().length() > MAGConfig.getCOMPRESS_THRESHOLD()))) {
+						(MAGConfig.isAutoCompressContent() 
+						&& req.getResponse().length() > MAGConfig.getAutoCompressThreshold()))) {
 						
 						resp.addHeader("X-Anhe-Content-Encoding", "gzip");
 						compressed = true;
 						
 					}
 					
-					if (req.isCacheable() && !req.isRequestByPushServer() && MAGConfig.getPUSH_ENGINE_URI() != null) {
+					if (req.isCacheable() && !req.isRequestByPushServer() && MAGConfig.getPushEngineURI() != null) {
 						if (!MAGPushClient.registerURL(req)) {
 							MAGLog.log(req, "registerURL " + req.getURL() + " failed!");
 						}

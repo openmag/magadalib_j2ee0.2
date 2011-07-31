@@ -86,7 +86,7 @@ public class MAGPushClient {
 				+ req.getDevice() + " " + req.getSoftwareVersion() + " "
 				+ req.getPlatformVersion() + " " + req.getPushServer());
 		if (req.isRequestByPushServer()
-				|| MAGConfig.getPUSH_ENGINE_URI() == null) {
+				|| MAGConfig.getPushEngineURI() == null) {
 			return true;
 		}
 
@@ -117,7 +117,7 @@ public class MAGPushClient {
 		query.put("_mds", mdsserver);
 		query.put("_protocol", protocol);
 
-		String result = post(MAGConfig.getPUSH_ENGINE_URI(), query);
+		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null) {
 			return false;
 		} else {
@@ -127,7 +127,7 @@ public class MAGPushClient {
 
 	public static boolean unregisterPush(MAGRequest req) {
 		if (req.isRequestByPushServer()
-				|| MAGConfig.getPUSH_ENGINE_URI() == null) {
+				|| MAGConfig.getPushEngineURI() == null) {
 			return true;
 		}
 		return __unregister_device(req.getModule(), req.getPIN(), req.getIMSI());
@@ -140,7 +140,7 @@ public class MAGPushClient {
 		query.put("_pin", pin);
 		query.put("_imsi", imsi);
 
-		String result = post(MAGConfig.getPUSH_ENGINE_URI(), query);
+		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null) {
 			return false;
 		} else {
@@ -150,7 +150,7 @@ public class MAGPushClient {
 
 	public static boolean registerURL(MAGRequest req) {
 		if (req.isRequestByPushServer()
-				|| MAGConfig.getPUSH_ENGINE_URI() == null) {
+				|| MAGConfig.getPushEngineURI() == null) {
 			return true;
 		}
 		return __registerURL(req.getModule(), req.getUsername(), req.getPIN(),
@@ -168,7 +168,7 @@ public class MAGPushClient {
 		query.put("_url", url);
 		query.put("_expire", "" + expire);
 
-		String result = post(MAGConfig.getPUSH_ENGINE_URI(), query);
+		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null) {
 			return false;
 		} else {
@@ -183,7 +183,7 @@ public class MAGPushClient {
 		query.put("_user", user);
 		query.put("_var", var);
 
-		String result = post(MAGConfig.getPUSH_ENGINE_URI(), query);
+		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null) {
 			return null;
 		} else {
@@ -193,7 +193,7 @@ public class MAGPushClient {
 	}
 
 	public static String getLocalVar(MAGRequest req, String var) {
-		if (MAGConfig.getPUSH_ENGINE_URI() == null) {
+		if (MAGConfig.getPushEngineURI() == null) {
 			return null;
 		}
 		return __getLocalVar(req.getModule(), req.getUsername(), var);
@@ -208,7 +208,7 @@ public class MAGPushClient {
 		query.put("_var", var);
 		query.put("_value", value);
 
-		String result = post(MAGConfig.getPUSH_ENGINE_URI(), query);
+		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null) {
 			return false;
 		} else {
@@ -218,7 +218,7 @@ public class MAGPushClient {
 
 	public static boolean setLocalVar(MAGRequest req, String var, String value) {
 		if (req.isRequestByPushServer()
-				|| MAGConfig.getPUSH_ENGINE_URI() == null) {
+				|| MAGConfig.getPushEngineURI() == null) {
 			return true;
 		}
 		return __setLocalVar(req.getModule(), req.getUsername(), var, value);

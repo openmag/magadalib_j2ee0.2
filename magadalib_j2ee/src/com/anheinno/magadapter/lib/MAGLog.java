@@ -13,8 +13,11 @@ public class MAGLog {
 		String CurrentDate = tempDate.format(new java.util.Date());
 		String CurrentTime = tempTime.format(new java.util.Date());
 
-		String filepath = MAGConfig.getLOG_DIR() + "/" + "mag.log."
-				+ CurrentDate + ".txt";
+		if(MAGConfig.getLogDir() == null) {
+			return;
+		}
+		
+		String filepath = MAGConfig.getLogDir() + "/" + "mag.log." + CurrentDate + ".txt";
 
 		try {
 			FileWriter fw = new FileWriter(filepath, true);

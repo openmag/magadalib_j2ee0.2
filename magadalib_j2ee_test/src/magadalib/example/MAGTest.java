@@ -23,7 +23,10 @@ import com.anheinno.magadapter.lib.ui.MAGStyle;
 		urlPatterns = { "/MAGTest" }, 
 		initParams = { 
 				@WebInitParam(name = "log", value = "log"),
-				@WebInitParam(name = "expire", value = "72")
+				@WebInitParam(name = "expire", value = "72"),
+				@WebInitParam(name = "push-uri", value = "http://192.168.0.201/MAGLIBv0.3/magserver/push/pushengine.php"),
+				@WebInitParam(name = "compress-auto", value="true"),
+				@WebInitParam(name = "compress-threshold", value="8192")
 		})
 public class MAGTest extends MAGServer {
 	private static final long serialVersionUID = 1L;
