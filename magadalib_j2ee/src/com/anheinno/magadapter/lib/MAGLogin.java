@@ -3,6 +3,7 @@ package com.anheinno.magadapter.lib;
 
 import com.anheinno.magadapter.lib.MAGLog;
 import com.anheinno.magadapter.lib.MAGPushClient;
+import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 
 
 public class MAGLogin implements IMAGHandler
@@ -26,14 +27,14 @@ public class MAGLogin implements IMAGHandler
         {
             if(_authenticator != null) 
             {
-                String redirect = _authenticator.authenticate(req.getUsername(), req.getPIN(), req.getPassword());
+                MAGLinkURL redirect = _authenticator.authenticate(req.getUsername(), req.getPIN(), req.getPassword());
                 if(redirect != null) 
                 {
                     if(req.getVarBooleanean("_bind")) 
                     {
                         MAGPushClient.registerPush(req);
                     }
-                    req.redirect(redirect);
+                    req.redirect(redirect.getURL());
                     return true;
                 }
                 else 
