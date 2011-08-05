@@ -22,23 +22,32 @@ import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 				@WebInitParam(name = "compress-threshold", value="8192")
 		})
 
-public class MAGTest extends MAGServer {
+public class MAGTest extends MAGServer 
+{
 	private static final long serialVersionUID = 1L;
 
-	protected IMAGAuthenticator getAuthenticator() {
-		return new IMAGAuthenticator() {
-			public MAGLinkURL authenticate(String username, String pin, String password) {
-				if(username != null && username.equals("admin") && password != null && password.equals("123")) {
+	protected IMAGAuthenticator getAuthenticator() 
+	{
+		return new IMAGAuthenticator() 
+		{
+			public MAGLinkURL authenticate(String username, String pin, String password) 
+			{
+				if(username != null && username.equals("admin") && password != null && password.equals("123")) 
+				{
 					return (new MAGLinkURL("MAGTest2")).setHandler("MAINSCREEN");
-				}else {
+				}
+				else 
+				{
 					return (MAGLinkURL)null;
 				}
 			}	
 		};
 	}
 
-	protected IMAGHandler[] getHandlers() {
-		return new IMAGHandler[] {
+	protected IMAGHandler[] getHandlers() 
+	{
+		return new IMAGHandler[] 
+		{
 			new MainScreen()
 		};
 	}
