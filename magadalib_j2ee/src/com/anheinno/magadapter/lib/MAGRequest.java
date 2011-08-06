@@ -316,13 +316,15 @@ public class MAGRequest
 		return __binary_data;
 	}
 
-	public void redirect(String url)
+	public void redirect(String url, JSONObject config)
 	{
+		if(config == null) {
+			config = new JSONObject();
+		}
 		try
 		{
-			JSONObject ret = new JSONObject();
-			ret.put("_redirect", url);
-			response(ret);
+			config.put("_redirect", url);
+			response(config);
 		}
 		catch (final Exception e)
 		{
@@ -443,6 +445,10 @@ public class MAGRequest
 	public String getUsername()
 	{
 		return __username;
+	}
+	
+	public void setUsername(String user) {
+		__username = user;
 	}
 
 	public String getPassword()

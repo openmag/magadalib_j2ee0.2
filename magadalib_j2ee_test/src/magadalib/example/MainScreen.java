@@ -110,6 +110,8 @@ public class MainScreen implements IMAGHandler {
 		
 		//MAGLog.log(doc.toString());
 		
+		//req.enableGZip();
+		
 		req.response(doc);
 		return true;
 	}

@@ -2,7 +2,6 @@ package com.anheinno.magadapter.lib;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.util.Hashtable;
 import java.util.zip.GZIPOutputStream;

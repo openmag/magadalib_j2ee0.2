@@ -12,8 +12,30 @@ import com.anheinno.magadapter.lib.MAGLog;
 
 import java.net.HttpURLConnection;
 
+import org.json.lite.JSONObject;
+
 public class MAGPushClient
 {
+	
+	public static String getBoundAccount(MAGRequest req)
+    {
+        Hashtable<String, String> query = new Hashtable<String, String>();
+        if (req.isRequestByPushServer())
+        {
+            return null;
+        }
+        if (MAGConfig.getPushEngineURI() != null)
+        {
+            query.put("_action", "BIND");
+            query.put("_module", req.getModule());
+            query.put("_pin", req.getPIN());
+            query.put("_user", req.getUsername());
+            String res = post(MAGConfig.getPushEngineURI(), query);
+            MAGLog.log(MAGConfig.getPushEngineURI() + "?" + buildQuery(query) + " GET=" + res);
+            return res;
+        }
+        return null;
+    }
 
 	private static String buildQuery(Hashtable<String, String> param)
 	{
@@ -94,14 +116,14 @@ public class MAGPushClient
 	 * connection.getHeaderField(key); System.out.println(key+"     "+val); }
 	 */
 
-	public static boolean registerPush(MAGRequest req)
+	public static JSONObject registerPush(MAGRequest req)
 	{
 		MAGLog.log("registerPush: " + req.getModule() + " " + req.getUsername() + " " + req.getPassword() + " "
 				+ req.getPIN() + " " + req.getDevice() + " " + req.getSoftwareVersion() + " "
 				+ req.getPlatformVersion() + " " + req.getPushServer());
 		if (req.isRequestByPushServer() || MAGConfig.getPushEngineURI() == null)
 		{
-			return true;
+			return new JSONObject();
 		}
 
 		if (null != req.getPushServer() && null != req.getPushProtocol())
@@ -112,11 +134,11 @@ public class MAGPushClient
 		}
 		else
 		{
-			return false;
+			return null;
 		}
 	}
 
-	private static boolean __register_device(String module, String user, String passwd, String pin, String imsi, String device, String software, String platform, String mdsserver, String protocol)
+	private static JSONObject __register_device(String module, String user, String passwd, String pin, String imsi, String device, String software, String platform, String mdsserver, String protocol)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
 		query.put("_action", "REGIST");
@@ -132,14 +154,15 @@ public class MAGPushClient
 		query.put("_protocol", protocol);
 
 		String result = post(MAGConfig.getPushEngineURI(), query);
-		if (result == null)
+		if (result != null)
 		{
-			return false;
+			try {
+				return new JSONObject(result);
+			}catch(final Exception e) {
+				
+			}
 		}
-		else
-		{
-			return true;
-		}
+		return null;
 	}
 
 	public static boolean unregisterPush(MAGRequest req)
