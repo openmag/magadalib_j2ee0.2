@@ -1,7 +1,7 @@
 package com.anheinno.magadapter.lib;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Enumeration;
@@ -16,26 +16,26 @@ import org.json.lite.JSONObject;
 
 public class MAGPushClient
 {
-	
+
 	public static String getBoundAccount(MAGRequest req)
-    {
-        Hashtable<String, String> query = new Hashtable<String, String>();
-        if (req.isRequestByPushServer())
-        {
-            return null;
-        }
-        if (MAGConfig.getPushEngineURI() != null)
-        {
-            query.put("_action", "BIND");
-            query.put("_module", req.getModule());
-            query.put("_pin", req.getPIN());
-            query.put("_user", req.getUsername());
-            String res = post(MAGConfig.getPushEngineURI(), query);
-            MAGLog.log(MAGConfig.getPushEngineURI() + "?" + buildQuery(query) + " GET=" + res);
-            return res;
-        }
-        return null;
-    }
+	{
+		Hashtable<String, String> query = new Hashtable<String, String>();
+		if (req.isRequestByPushServer())
+		{
+			return null;
+		}
+		if (MAGConfig.getPushEngineURI() != null)
+		{
+			query.put("_action", "BIND");
+			query.put("_module", req.getModule());
+			query.put("_pin", req.getPIN());
+			query.put("_user", req.getUsername());
+			String res = post(MAGConfig.getPushEngineURI(), query);
+			MAGLog.log(MAGConfig.getPushEngineURI() + "?" + buildQuery(query) + " GET=" + res);
+			return res;
+		}
+		return null;
+	}
 
 	private static String buildQuery(Hashtable<String, String> param)
 	{
@@ -85,6 +85,7 @@ public class MAGPushClient
 			dout.flush();
 			dout.close();
 
+			/*
 			int rc = conn.getResponseCode();
 			if (rc == HttpURLConnection.HTTP_OK)
 			{
@@ -99,6 +100,30 @@ public class MAGPushClient
 					String res = din.readUTF();
 					din.close();
 					return res;
+				}
+			}
+			conn.disconnect();
+			*/
+			int rc = conn.getResponseCode();
+			if (rc == HttpURLConnection.HTTP_OK)
+			{
+				String result = conn.getHeaderField("X-Anhe-Result");
+				if (result == null)
+				{
+					result = conn.getHeaderField("X-Anhe-MAG-Result");
+				}
+				if (result.trim().equalsIgnoreCase("TRUE"))
+				{
+					InputStream din = conn.getInputStream();
+					StringBuffer resbuff = new StringBuffer();
+					byte[] buffer = new byte[2048];
+					int read_len = 0;
+					while((read_len = din.read(buffer)) > 0) {
+						resbuff.append(new String(buffer, 0, read_len, "UTF-8"));
+					}
+					MAGLog.log(resbuff.toString());
+					din.close();
+					return resbuff.toString();
 				}
 			}
 			conn.disconnect();
@@ -138,7 +163,8 @@ public class MAGPushClient
 		}
 	}
 
-	private static JSONObject __register_device(String module, String user, String passwd, String pin, String imsi, String device, String software, String platform, String mdsserver, String protocol)
+	private static JSONObject __register_device(String module, String user, String passwd, String pin, String imsi,
+			String device, String software, String platform, String mdsserver, String protocol)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
 		query.put("_action", "REGIST");
@@ -156,10 +182,13 @@ public class MAGPushClient
 		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result != null)
 		{
-			try {
+			try
+			{
 				return new JSONObject(result);
-			}catch(final Exception e) {
-				
+			}
+			catch (final Exception e)
+			{
+
 			}
 		}
 		return null;

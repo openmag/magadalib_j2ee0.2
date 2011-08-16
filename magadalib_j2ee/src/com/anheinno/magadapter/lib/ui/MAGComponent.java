@@ -56,7 +56,7 @@ public abstract class MAGComponent extends JSONObject implements MAGComponentInt
 
 	protected void setAttr(String key, String val)
 	{
-		if (val != null && val.length() > 0)
+		if (val != null) // && val.length() > 0)
 		{
 			setAttr(key, (Object) val);
 		}

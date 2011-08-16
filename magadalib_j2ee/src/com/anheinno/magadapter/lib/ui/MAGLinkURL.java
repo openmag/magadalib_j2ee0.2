@@ -110,6 +110,7 @@ public class MAGLinkURL
 	public String getURL()
 	{
 		StringBuffer query = new StringBuffer();
+		
 		if (_handler != null)
 		{
 			try
