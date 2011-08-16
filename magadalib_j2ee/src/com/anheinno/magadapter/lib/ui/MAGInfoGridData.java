@@ -2,7 +2,6 @@ package com.anheinno.magadapter.lib.ui;
 
 import org.json.lite.JSONObject;
 
-import com.anheinno.magadapter.lib.MAGConfig;
 import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
 
 public class MAGInfoGridData extends JSONObject
@@ -10,15 +9,10 @@ public class MAGInfoGridData extends JSONObject
 
 	public MAGInfoGridData(String summary, String[] data, MAGLinkURL link, String id)
 	{
-		this(summary, data, link, MAGLinkTarget.LINK_TARGET_SELF, MAGConfig.getDefaultExpire(), id);
+		this(summary, data, link, MAGLinkTarget.LINK_TARGET_SELF, id);
 	}
 
-	public MAGInfoGridData(String summary, String[] data, MAGLinkURL link, long expire, String id)
-	{
-		this(summary, data, link, MAGLinkTarget.LINK_TARGET_SELF, expire, id);
-	}
-
-	public MAGInfoGridData(String summary, String[] data, MAGLinkURL link, MAGLinkTarget target, long expire, String id)
+	public MAGInfoGridData(String summary, String[] data, MAGLinkURL link, MAGLinkTarget target, String id)
 	{
 		try
 		{
@@ -33,11 +27,17 @@ public class MAGInfoGridData extends JSONObject
 			{
 				put("_link", link.getScripts());
 			}
-			else
+			else if(target == MAGLinkTarget.LINK_TARGET_BROWSER)
 			{
 				put("_link", link.getURL());
 			}
-			put("_expire", expire);
+			else
+			{
+				put("_link", link.getURL());
+				put("_expire", link.getExpireMilliseconds());
+				put("_notify", link.isNotify() ? "true" : "false");
+				put("_save", link.isSaveHistory() ? "true" : "false");
+			}
 			put("_id", id);
 		}
 		catch (final Exception e)
@@ -76,18 +76,6 @@ public class MAGInfoGridData extends JSONObject
 		try
 		{
 			put("_hint", hint);
-		}
-		catch (final Exception e)
-		{
-		}
-		return this;
-	}
-
-	public MAGInfoGridData setSave(boolean save)
-	{
-		try
-		{
-			put("_save", save ? "true" : "false");
 		}
 		catch (final Exception e)
 		{

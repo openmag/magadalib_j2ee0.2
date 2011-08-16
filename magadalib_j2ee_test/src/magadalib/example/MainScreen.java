@@ -12,7 +12,7 @@ import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
 public class MainScreen implements IMAGHandler {
 
 	public boolean process(MAGRequest req) {
-		long DEFAULT_EXPIRE = 72*24*3600*1000L;
+		int DEFAULT_EXPIRE = 72;
 		
 		MAGDocument doc = new MAGDocument("MAIN");
 
@@ -53,59 +53,55 @@ public class MainScreen implements IMAGHandler {
 		style.setBorder(5, null);
 		style.setHeight(60);
 
-		MAGLink btn1 = new MAGLink("文档一Test", (new MAGLinkURL()).setHandler("SCREEN1").addParam("flag", "中文"), 0);
-		btn1.setNotify(true);
+		MAGLink btn1 = new MAGLink("文档一Test", (new MAGLinkURL()).setHandler("SCREEN1").addParam("flag", "中文").setExpireHours(0).setNotify(true).setSaveHistory(false));
 		btn1.setClass("imgbtn_style");
 		btn1.setHint("Document 1 shows some useful information.\nTooltip ....\nToootip ....\n12312312\n123123\n");
 		btn1.setStatus("Document 1 get focus!");
-		btn1.setSave(false);
 		doc.addChild(btn1);
 
 		MAGStyle btn2_style = new MAGStyle();
 		btn2_style.setStyle("hint-text-style", "font-scale=2.0 text-align=right padding=20");
 		btn2_style.setStyle("hint-border-width", "0");
 		btn2_style.setStyle("hint-background-transparent", "true");
-		MAGLink btn2 = new MAGLink("文档二", (new MAGLinkURL()).setHandler("SCREEN2"), DEFAULT_EXPIRE);
-		btn2.setNotify(true);
+		MAGLink btn2 = new MAGLink("文档二", (new MAGLinkURL()).setHandler("SCREEN2").setExpireHours(DEFAULT_EXPIRE).setNotify(true));
 		btn2.setClass("imgbtn_style");
 		btn2.setStyle(btn2_style);
 		btn2.setHint("这是浮动消息窗口，焦点停留一段时间后就会自动弹出。");
 		doc.addChild(btn2);
 
-		MAGLink btn3 = new MAGLink("报价单", (new MAGLinkURL()).setHandler("QUOTATION"), DEFAULT_EXPIRE);
-		btn3.setNotify(false);
+		MAGLink btn3 = new MAGLink("报价单", (new MAGLinkURL()).setHandler("QUOTATION").setNotify(false).setExpireHours(DEFAULT_EXPIRE));
 		btn3.setStyle(style);
 		doc.addChild(btn3);
 
-		MAGLink btn4 = new MAGLink("只读组件", (new MAGLinkURL()).setHandler("SCREEN_READONLY"), DEFAULT_EXPIRE);
+		MAGLink btn4 = new MAGLink("只读组件", (new MAGLinkURL()).setHandler("SCREEN_READONLY").setExpireHours(DEFAULT_EXPIRE));
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
-		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLIST_EXAMPLE"), DEFAULT_EXPIRE);
+		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLIST_EXAMPLE").setExpireHours(DEFAULT_EXPIRE));
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
-		btn4 = new MAGLink("九宫格", (new MAGLinkURL()).setHandler("NINEGRID"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
+		btn4 = new MAGLink("九宫格", (new MAGLinkURL()).setHandler("NINEGRID").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
 		MAGLinkURL classinfo = new MAGLinkURL();
 		classinfo.setClass("com.anheinno.libs.mag.controls.calendar.CalendarLinkedControl");
 		classinfo.addParam((new MAGLinkURL("services.php")).setHandler("GETCALENDAR").getURL());
-		MAGLink btn5 = new MAGLink("日历共享", classinfo, 0, MAGLinkTarget.LINK_TARGET_CUSTOMCONTROL);
+		MAGLink btn5 = new MAGLink("日历共享", classinfo, MAGLinkTarget.LINK_TARGET_CUSTOMCONTROL);
 		btn5.setStyle(style);
 		doc.addChild(btn5);
 
-		MAGLink btn6 = new MAGLink("创建新的约会", (new MAGLinkURL()).setHandler("NEWAPPOINTMENT"), 0, MAGLinkTarget.LINK_TARGET_NEW);
+		MAGLink btn6 = new MAGLink("创建新的约会", (new MAGLinkURL()).setHandler("NEWAPPOINTMENT"), MAGLinkTarget.LINK_TARGET_NEW);
 		btn6.setStyle(style);
 		btn6.setHint("To create new appointment!\nThis is a brand new function, please try it. You will not disappoint!!!");
 		doc.addChild(btn6);
 
-		MAGMenuItem menu = new MAGMenuItem("访问新浪网", new MAGLinkURL("http://www.sina.com.cn"), 0, MAGLinkTarget.LINK_TARGET_BROWSER);
+		MAGMenuItem menu = new MAGMenuItem("访问新浪网", new MAGLinkURL("http://www.sina.com.cn"), MAGLinkTarget.LINK_TARGET_BROWSER);
 		doc.addChild(menu);
-		menu = new MAGMenuItem("报价单", (new MAGLinkURL()).setHandler("QUOTATION"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
+		menu = new MAGMenuItem("报价单", (new MAGLinkURL()).setHandler("QUOTATION").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
-		menu = new MAGMenuItem("Info Grid Demo", (new MAGLinkURL()).setHandler("INFOGRIDDEMO"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
+		menu = new MAGMenuItem("Info Grid Demo", (new MAGLinkURL()).setHandler("INFOGRIDDEMO").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
 		
 		//MAGLog.log(doc.toString());

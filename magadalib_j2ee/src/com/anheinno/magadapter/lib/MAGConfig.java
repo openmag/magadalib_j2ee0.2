@@ -33,8 +33,12 @@ public class MAGConfig {
 
 	private static long _default_expire = 24 * 3600 * 1000L;
 
-	public static long getDefaultExpire() {
+	public static long getDefaultExpireMilliseconds() {
 		return _default_expire;
+	}
+	
+	public static long getDefaultExpireHours() {
+		return _default_expire/1000/3600;
 	}
 
 	public static void setDefaultExpireSeconds(int value) {
