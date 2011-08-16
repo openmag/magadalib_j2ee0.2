@@ -33,7 +33,7 @@ import com.anheinno.magadapter.lib.ui.MAGTextinput.MAGTextinputFilter;
 public class Screen1 implements IMAGHandler
 {
 
-	private static final long DEFAULT_EXPIRE = 72*24*3600*1000L;
+	private static final int DEFAULT_EXPIRE = 72*24;
 
 	public String getAction()
 	{
@@ -81,7 +81,7 @@ public class Screen1 implements IMAGHandler
 		
 		panel1.addChild(new MAGNote("MAGNote", "这是一个MAGNote"));
 		
-		MAGLink link = new MAGLink("下一个文档", new MAGLinkURL().setHandler("SCREEN2").addParam("_user", req.getUsername()), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_SELF);
+		MAGLink link = new MAGLink("下一个文档", new MAGLinkURL().setHandler("SCREEN2").addParam("_user", req.getUsername()).setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_SELF);
 		MAGStyle style_link = new MAGStyle();
 		style_link.setAlignCenter();
 		style_link.setHeight(60);
@@ -195,7 +195,7 @@ public class Screen1 implements IMAGHandler
 		MAGFileLink download5 = new MAGFileLink("Pdf下载测试(<256K)", "", new MAGLinkURL("http://192.168.0.201/download/aw_overview.pdf"));
 		doc.addChild(download5);
 		
-		MAGMenuItem menu = new MAGMenuItem("报价单", new MAGLinkURL().setHandler("QUOTATION"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
+		MAGMenuItem menu = new MAGMenuItem("报价单", new MAGLinkURL().setHandler("QUOTATION").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
 		
 		

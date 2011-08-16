@@ -24,7 +24,7 @@ import com.anheinno.magadapter.lib.ui.MAGTextinput;
 
 public class Screen_Readonly implements IMAGHandler
 {
-	private static final long DEFAULT_EXPIRE = 72*24*3600*1000L;
+	private static final int DEFAULT_EXPIRE = 72*24;
 
 	public String getAction()
 	{
@@ -52,7 +52,7 @@ public class Screen_Readonly implements IMAGHandler
 
 		panel1.addChild(new MAGNote("MAGNote", "这是一个MAGNote"));
 
-		MAGLink link = new MAGLink("下一个文档", new MAGLinkURL().setHandler("SCREEN2").addParam("_user", req.getUsername()), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
+		MAGLink link = new MAGLink("下一个文档", new MAGLinkURL().setHandler("SCREEN2").addParam("_user", req.getUsername()).setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		MAGStyle style_link = new MAGStyle();
 		style_link.setAlignCenter();
 		style_link.setHeight(60);

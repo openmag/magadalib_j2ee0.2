@@ -80,7 +80,7 @@ public class MAGListDemo implements IMAGHandler
 		{
 			MAGCombo combo = new MAGCombo("");
 			combo.setClass("combo_style");
-			MAGLink link = new MAGLink(d[0], new MAGLinkURL(d[1]), 0, MAGLinkTarget.LINK_TARGET_BROWSER, "link");
+			MAGLink link = new MAGLink(d[0], new MAGLinkURL(d[1]).setExpireHours(0), MAGLinkTarget.LINK_TARGET_BROWSER, "link");
 			link.setClass("link_style");
 			combo.addChild(link);
 
@@ -122,7 +122,7 @@ public class MAGListDemo implements IMAGHandler
 		{
 			MAGCombo combo = new MAGCombo("item_"+i);
 			combo.setClass("combo_style");
-			MAGLink link = new MAGLink(data[i][0], new MAGLinkURL(data[i][1]), 0, MAGLinkTarget.LINK_TARGET_BROWSER, "link");
+			MAGLink link = new MAGLink(data[i][0], new MAGLinkURL(data[i][1]).setExpireHours(0), MAGLinkTarget.LINK_TARGET_BROWSER, "link");
 			link.setClass("link_style");
 			combo.addChild(link);
 

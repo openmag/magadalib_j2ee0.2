@@ -2,24 +2,20 @@ package com.anheinno.magadapter.lib.ui;
 
 public class MAGLink extends MAGLinkableComponent
 {
+	
 	public MAGLink(String title, MAGLinkURL link)
 	{
-		this(title, link, 0, MAGLinkTarget.LINK_TARGET_SELF, null);
+		this(title, link, MAGLinkTarget.LINK_TARGET_SELF, null);
 	}
 
-	public MAGLink(String title, MAGLinkURL link, long expire)
+	public MAGLink(String title, MAGLinkURL link, MAGLinkTarget target)
 	{
-		this(title, link, expire, MAGLinkTarget.LINK_TARGET_SELF, null);
+		this(title, link, target, null);
 	}
 
-	public MAGLink(String title, MAGLinkURL link, long expire, MAGLinkTarget target)
+	public MAGLink(String title, MAGLinkURL link, MAGLinkTarget target, String id)
 	{
-		this(title, link, expire, target, null);
-	}
-
-	public MAGLink(String title, MAGLinkURL link, long expire, MAGLinkTarget target, String id)
-	{
-		super(title, link, expire, target, id);
+		super(title, link, target, id);
 	}
 
 }

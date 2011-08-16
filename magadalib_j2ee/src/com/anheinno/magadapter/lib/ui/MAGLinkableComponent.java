@@ -24,7 +24,7 @@ public abstract class MAGLinkableComponent extends MAGComponent
 		}
 	}
 
-	protected MAGLinkableComponent(String title, MAGLinkURL link, long expire, MAGLinkTarget target, String id)
+	protected MAGLinkableComponent(String title, MAGLinkURL link, MAGLinkTarget target, String id)
 	{
 		super(title, id);
 		setAttr("_target", target);
@@ -36,21 +36,16 @@ public abstract class MAGLinkableComponent extends MAGComponent
 		{
 			setAttr("_link", link.getScripts());
 		}
-		else
+		else if(target == MAGLinkTarget.LINK_TARGET_BROWSER) 
 		{
 			setAttr("_link", link.getURL());
+		}else
+		{
+			setAttr("_link", link.getURL());
+			setAttr("_expire", link.getExpireMilliseconds());
+			setAttr("_notify", link.isNotify());
+			setAttr("_save", link.isSaveHistory());
 		}
-		setAttr("_expire", expire);
-	}
-
-	public void setNotify(boolean notify)
-	{
-		setAttr("_notify", notify);
-	}
-
-	public void setSave(boolean save)
-	{
-		setAttr("_save", save);
 	}
 
 }

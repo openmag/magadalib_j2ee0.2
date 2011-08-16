@@ -14,7 +14,7 @@ import com.anheinno.magadapter.lib.ui.MAGText;
 
 public class Screen2 implements IMAGHandler
 {
-	private static final long DEFAULT_EXPIRE = 72*24*3600*1000L;
+	private static final int DEFAULT_EXPIRE = 72*24;
 	
 	public String getAction()
 	{
@@ -28,7 +28,7 @@ public class Screen2 implements IMAGHandler
 		MAGPanel panel1 = new MAGPanel("Read only component");
 		panel1.addChild(new MAGText("MAGText", "这是一个MAGText"));
 		panel1.addChild(new MAGNote("MAGNote", "这是一个MAGNote"));
-		panel1.addChild(new MAGLink("前一个文档", new MAGLinkURL().setHandler("SCREEN1").addParam("_user", req.getUsername()), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_SELF));
+		panel1.addChild(new MAGLink("前一个文档", new MAGLinkURL().setHandler("SCREEN1").addParam("_user", req.getUsername()).setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_SELF));
 		
 		MAGStyle imgstyle = new MAGStyle();
 		imgstyle.setIWidth("0.6");

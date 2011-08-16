@@ -8,12 +8,17 @@ import java.util.Vector;
 import org.json.lite.JSONArray;
 import org.json.lite.JSONObject;
 
+import com.anheinno.magadapter.lib.MAGConfig;
+
 public class MAGLinkURL
 {
 	private URI _uri;
 	private String _handler;
 	private Vector<KeyValuePair> _params;
 	private JSONArray _class_params;
+	private long _expire;
+	private boolean _notify;
+	private boolean _save_history;
 
 	private class KeyValuePair
 	{
@@ -32,10 +37,22 @@ public class MAGLinkURL
 		_uri = null;
 		_handler = null;
 		_params = null;
+		_expire = MAGConfig.getDefaultExpireMilliseconds();
+		_notify = true;
+		_save_history = true;
 	}
 
 	public MAGLinkURL(String url)
 	{
+		setURL(url);
+		_handler = null;
+		_params = null;
+		_expire = MAGConfig.getDefaultExpireMilliseconds();
+		_notify = true;
+		_save_history = true;
+	}
+	
+	public MAGLinkURL setURL(String url) {
 		try
 		{
 			_uri = new URI(url);
@@ -44,8 +61,7 @@ public class MAGLinkURL
 		{
 			_uri = null;
 		}
-		_handler = null;
-		_params = null;
+		return this;
 	}
 
 	public MAGLinkURL setHandler(String handler)
@@ -105,6 +121,33 @@ public class MAGLinkURL
 	protected String getScripts()
 	{
 		return _handler;
+	}
+	
+	public MAGLinkURL setExpireHours(int hours) {
+		_expire = hours*3600*1000L;
+		return this;
+	}
+	
+	public MAGLinkURL setNotify(boolean notify) {
+		_notify = notify;
+		return this;
+	}
+	
+	public MAGLinkURL setSaveHistory(boolean save_history) {
+		_save_history = save_history;
+		return this;
+	}
+	
+	public boolean isNotify() {
+		return _notify;
+	}
+	
+	public boolean isSaveHistory() {
+		return _save_history;
+	}
+	
+	public long getExpireMilliseconds() {
+		return _expire;
 	}
 
 	public String getURL()
@@ -168,4 +211,19 @@ public class MAGLinkURL
 			return url;
 		}
 	}
+	
+	public JSONObject toJSONObject()
+    {
+		try {
+	        JSONObject obj = new JSONObject();
+	        obj.put("_link", getURL());
+	        obj.put("_expire", getExpireMilliseconds());
+	        obj.put("_notify", (isNotify() ? "true" : "false"));
+	        obj.put("_save", (isSaveHistory() ? "true" : "false"));
+	        return obj;
+		}catch(final Exception e) {
+			
+		}
+		return null;
+    }
 }

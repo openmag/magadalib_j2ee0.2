@@ -11,7 +11,7 @@ import com.anheinno.magadapter.lib.ui.MAGStyle;
 
 public class NineGrid implements IMAGHandler
 {
-	private static final long DEFAULT_EXPIRE = 72*24*3600*1000L;
+	private static final int DEFAULT_EXPIRE = 72*24;
 
 	public String getAction()
 	{
@@ -54,8 +54,7 @@ public class NineGrid implements IMAGHandler
 
 		for(int i = 0; i < 7; i ++) 
 		{
-			MAGLink btn = new MAGLink(Integer.toString(i), new MAGLinkURL().setHandler("SCREEN1"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
-			btn.setNotify(true);
+			MAGLink btn = new MAGLink(Integer.toString(i), new MAGLinkURL().setHandler("SCREEN1").setExpireHours(DEFAULT_EXPIRE).setNotify(true), MAGLinkTarget.LINK_TARGET_NEW);
 			btn.setClass("btn_style");
 			btn.setHint("Document " + Integer.toString(i) + " shows some useful information");
 			btn.setStatus("Document " + Integer.toString(i) + " get focus!");
@@ -64,7 +63,7 @@ public class NineGrid implements IMAGHandler
 
 		doc.addChild(panel);
 
-		MAGLink close_link = new MAGLink("Close window", new MAGLinkURL().setScripts("close();"), 0, MAGLinkTarget.LINK_TARGET_SCRIPT);
+		MAGLink close_link = new MAGLink("Close window", new MAGLinkURL().setScripts("close();").setExpireHours(0), MAGLinkTarget.LINK_TARGET_SCRIPT);
 		MAGStyle cl_style = new MAGStyle();
 		cl_style.setAlignCenter();
 		cl_style.setStyle("text-style", "color=white");
@@ -73,12 +72,12 @@ public class NineGrid implements IMAGHandler
 		doc.addChild(close_link);
 
 		String open_url = (new MAGLinkURL().setHandler("SCREEN1")).getURL(); 
-		MAGLink open_link = new MAGLink("Open window", new MAGLinkURL().setScripts("open("+open_url+");"), 0, MAGLinkTarget.LINK_TARGET_SCRIPT);
+		MAGLink open_link = new MAGLink("Open window", new MAGLinkURL().setScripts("open("+open_url+");").setExpireHours(0), MAGLinkTarget.LINK_TARGET_SCRIPT);
 		open_link.setStyle(cl_style);
 		doc.addChild(open_link);
 
 		String popup_url = (new MAGLinkURL().setHandler("SCREEN1")).getURL(); 
-		MAGLink popup_link = new MAGLink("Popup window", new MAGLinkURL().setScripts("popup("+popup_url+")"), 0, MAGLinkTarget.LINK_TARGET_SCRIPT);
+		MAGLink popup_link = new MAGLink("Popup window", new MAGLinkURL().setScripts("popup("+popup_url+")").setExpireHours(0), MAGLinkTarget.LINK_TARGET_SCRIPT);
 		popup_link.setStyle(cl_style);
 		doc.addChild(popup_link);
 
