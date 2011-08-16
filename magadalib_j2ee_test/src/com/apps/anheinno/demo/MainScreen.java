@@ -1,19 +1,25 @@
-package magadalib.example;
+package com.apps.anheinno.demo;
 
 import com.anheinno.magadapter.lib.IMAGHandler;
 import com.anheinno.magadapter.lib.MAGRequest;
 import com.anheinno.magadapter.lib.ui.MAGDocument;
 import com.anheinno.magadapter.lib.ui.MAGLink;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
+import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
 import com.anheinno.magadapter.lib.ui.MAGMenuItem;
 import com.anheinno.magadapter.lib.ui.MAGStyle;
-import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
 
-public class MainScreen implements IMAGHandler {
+public class MainScreen implements IMAGHandler
+{
+	private static final long DEFAULT_EXPIRE = 72*24*3600*1000L;
 
-	public boolean process(MAGRequest req) {
-		long DEFAULT_EXPIRE = 72*24*3600*1000L;
-		
+	public String getAction()
+	{
+		return "MAINSCREEN";
+	}
+
+	public boolean process(MAGRequest req)
+	{
 		MAGDocument doc = new MAGDocument("MAIN");
 
 		MAGStyle doc_style = new MAGStyle();
@@ -81,7 +87,7 @@ public class MainScreen implements IMAGHandler {
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
-		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLIST_EXAMPLE"), DEFAULT_EXPIRE);
+		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLISTEXAMPLE"), DEFAULT_EXPIRE);
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
@@ -103,22 +109,23 @@ public class MainScreen implements IMAGHandler {
 
 		MAGMenuItem menu = new MAGMenuItem("访问新浪网", new MAGLinkURL("http://www.sina.com.cn"), 0, MAGLinkTarget.LINK_TARGET_BROWSER);
 		doc.addChild(menu);
+		
 		menu = new MAGMenuItem("报价单", (new MAGLinkURL()).setHandler("QUOTATION"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
+		
 		menu = new MAGMenuItem("Info Grid Demo", (new MAGLinkURL()).setHandler("INFOGRIDDEMO"), DEFAULT_EXPIRE, MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
 		
-		//MAGLog.log(doc.toString());
+		MAGMenuItem tieredselectdemo = new MAGMenuItem("TieredSelected Demo", new MAGLinkURL().setHandler("MAGTIEREDSELECTDEMO"));
+		doc.addChild(tieredselectdemo);
 		
-		//req.enableGZip();
+		MAGMenuItem keywordfilterselect = new MAGMenuItem("KeywordsFilterSelect Demo", new MAGLinkURL().setHandler("MAGKEYWORDFILTERSELECTDEMO"));
+		doc.addChild(keywordfilterselect);
+		
+		//MAGLog.log(doc.toString());
 		
 		req.response(doc);
 		return true;
 	}
-
-	public String getAction() {
-		return "MAINSCREEN";
-	}
-
 
 }
