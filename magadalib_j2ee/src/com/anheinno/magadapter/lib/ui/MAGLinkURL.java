@@ -123,6 +123,11 @@ public class MAGLinkURL
 		return _handler;
 	}
 	
+	public MAGLinkURL setExpireMilliseconds(long msec) {
+		_expire = msec;
+		return this;
+	}
+	
 	public MAGLinkURL setExpireHours(int hours) {
 		_expire = hours*3600*1000L;
 		return this;
@@ -226,4 +231,8 @@ public class MAGLinkURL
 		}
 		return null;
     }
+	
+	public String toString() {
+		return getURL() + "/" + _expire + "/" + _notify + "/" + _save_history;
+	}
 }

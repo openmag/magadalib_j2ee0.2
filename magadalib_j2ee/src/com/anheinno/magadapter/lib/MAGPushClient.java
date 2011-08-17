@@ -16,16 +16,43 @@ import org.json.lite.JSONObject;
 
 public class MAGPushClient
 {
+	public static final long NEVER_EXPIRE = 20 * 365 * 24 * 3600 * 1000L;
+
+    public static JSONObject getUserConfig(MAGRequest req) {
+        if(!req.isRequestByPushServer()) {
+            return null;
+        }
+
+        if(MAGConfig.getPushEngineURI() != null) {
+        	Hashtable<String, String> query = new Hashtable<String, String>();
+            query.put("_action", "GETCONFIG");
+            query.put("_module", req.getModule());
+            query.put("_user",  req.getUsername());
+            query.put("_passwd", req.getPassword());
+            String result = post(MAGConfig.getPushEngineURI(), query);
+            if(result != null) {
+            	try
+    			{
+    				return new JSONObject(result);
+    			}
+    			catch (final Exception e)
+    			{
+
+    			}
+            }
+        }
+        return null;
+    }
 
 	public static String getBoundAccount(MAGRequest req)
-	{
-		Hashtable<String, String> query = new Hashtable<String, String>();
+	{	
 		if (req.isRequestByPushServer())
 		{
 			return null;
 		}
 		if (MAGConfig.getPushEngineURI() != null)
 		{
+			Hashtable<String, String> query = new Hashtable<String, String>();
 			query.put("_action", "BIND");
 			query.put("_module", req.getModule());
 			query.put("_pin", req.getPIN());
@@ -153,9 +180,20 @@ public class MAGPushClient
 
 		if (null != req.getPushServer() && null != req.getPushProtocol())
 		{
-			return __register_device(req.getModule(), req.getUsername(), req.getPassword(), req.getPIN(),
-					req.getIMSI(), req.getDevice(), req.getSoftwareVersion(), req.getPlatformVersion(),
+			JSONObject ret = __register_device(req.getModule(), req.getUsername(), req.getPassword(), req.getPIN(),
+					req.getDevice(), req.getSoftwareVersion(), req.getPlatformVersion(),
 					req.getPushServer(), req.getPushProtocol());
+			
+			if (ret != null)
+            {
+                MAGLog.log("register device succes! to register LOGIN url: " + req.getURL());
+                if(__registerURL(req.getModule(), req.getUsername(), req.getPIN(), req.getURL(), NEVER_EXPIRE)) {
+                	return ret;
+                }
+            }
+			
+			return null;
+
 		}
 		else
 		{
@@ -163,7 +201,7 @@ public class MAGPushClient
 		}
 	}
 
-	private static JSONObject __register_device(String module, String user, String passwd, String pin, String imsi,
+	private static JSONObject __register_device(String module, String user, String passwd, String pin, 
 			String device, String software, String platform, String mdsserver, String protocol)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
@@ -172,7 +210,6 @@ public class MAGPushClient
 		query.put("_user", user);
 		query.put("_passwd", passwd);
 		query.put("_pin", pin);
-		query.put("_imsi", imsi);
 		query.put("_software", software);
 		query.put("_platform", platform);
 		query.put("_device", device);
@@ -200,16 +237,15 @@ public class MAGPushClient
 		{
 			return true;
 		}
-		return __unregister_device(req.getModule(), req.getPIN(), req.getIMSI());
+		return __unregister_device(req.getModule(), req.getPIN());
 	}
 
-	private static boolean __unregister_device(String module, String pin, String imsi)
+	private static boolean __unregister_device(String module, String pin)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
 		query.put("_action", "UNREG");
 		query.put("_module", module);
 		query.put("_pin", pin);
-		query.put("_imsi", imsi);
 
 		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result == null)
@@ -228,18 +264,16 @@ public class MAGPushClient
 		{
 			return true;
 		}
-		return __registerURL(req.getModule(), req.getUsername(), req.getPIN(), req.getIMSI(), req.getURL(),
-				req.getExpire());
+		return __registerURL(req.getModule(), req.getUsername(), req.getPIN(), req.getURL(), req.getExpire());
 	}
 
-	private static boolean __registerURL(String module, String user, String pin, String imsi, String url, long expire)
+	private static boolean __registerURL(String module, String user, String pin, String url, long expire)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
 		query.put("_action", "CACHE");
 		query.put("_module", module);
 		query.put("_user", user);
 		query.put("_pin", pin);
-		query.put("_imsi", imsi);
 		query.put("_url", url);
 		query.put("_expire", "" + expire);
 

@@ -2,6 +2,7 @@ package com.apps.anheinno.demo;
 
 import com.anheinno.magadapter.lib.IMAGAuthenticator;
 import com.anheinno.magadapter.lib.IMAGHandler;
+import com.anheinno.magadapter.lib.MAGConfig;
 import com.anheinno.magadapter.lib.MAGServer;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 import javax.servlet.annotation.WebInitParam;
@@ -40,6 +41,14 @@ public class Services extends MAGServer
 		};
 	}
 
+	@Override
+	protected MAGLinkURL[] getPrefetchURLs() {
+		return new MAGLinkURL[]
+		{
+			(new MAGLinkURL().setHandler("QUOTATION").setExpireHours(MAGConfig.getDefaultExpireHours()).setNotify(false)),
+			(new MAGLinkURL().setHandler("NINEGRID").setExpireHours(MAGConfig.getDefaultExpireHours()).setNotify(true))
+		};
+	}
 
 
 	protected IMAGHandler[] getHandlers()

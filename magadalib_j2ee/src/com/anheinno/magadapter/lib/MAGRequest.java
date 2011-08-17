@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.lite.JSONObject;
 
+import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 import com.anheinno.magadapter.lib.util.SortedVector;
 
 public class MAGRequest
@@ -316,14 +317,18 @@ public class MAGRequest
 		return __binary_data;
 	}
 
-	public void redirect(String url, JSONObject config)
+	public void redirect(MAGLinkURL url, JSONObject config)
 	{
 		if(config == null) {
 			config = new JSONObject();
 		}
 		try
 		{
-			config.put("_redirect", url);
+			config.put("_type", "__auto_config__");
+            config.put("_redirect", url.getURL());
+            config.put("_expire", url.getExpireMilliseconds());
+            config.put("_notify", url.isNotify() ? "true" : "false");
+            config.put("_save", url.isSaveHistory() ? "true" : "false");
 			response(config);
 		}
 		catch (final Exception e)
@@ -510,6 +515,7 @@ public class MAGRequest
 		String[] info = getParam(key);
 		if (info != null && info[0].length() > 0)
 		{
+			//System.out.println("getVar: " + key + " = " + info[0].trim());
 			return info[0].trim();
 		}
 		return null;
@@ -540,15 +546,17 @@ public class MAGRequest
 		return 0L;
 	}
 
-	public boolean getVarBooleanean(String key)
+	public boolean getVarBoolean(String key)
 	{
 		String val = getVar(key);
 		if (val != null && val.toUpperCase().equals("TRUE"))
 		{
+			//System.out.println("getVarBoolean " + key + " = true");
 			return true;
 		}
 		else
 		{
+			//System.out.println("getVarBoolean " + key + " = false");
 			return false;
 		}
 	}

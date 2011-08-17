@@ -45,9 +45,9 @@ public class MAGConfig
 		return _default_expire;
 	}
 
-	public static long getDefaultExpireHours()
+	public static int getDefaultExpireHours()
 	{
-		return _default_expire / 1000 / 3600;
+		return (int)(_default_expire / 1000 / 3600);
 	}
 
 	public static void setDefaultExpireSeconds(int value)

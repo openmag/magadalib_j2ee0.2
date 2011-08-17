@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.anheinno.magadapter.lib.ui.MAGLinkURL;
+
 public abstract class MAGServer extends HttpServlet 
 {
 
@@ -95,6 +97,15 @@ public abstract class MAGServer extends HttpServlet
 
 		MAGLogin login = new MAGLogin();
 		login.registerAuthenticator(getAuthenticator());
+		
+		MAGLinkURL[] prefetch_urls = getPrefetchURLs();
+		if(prefetch_urls != null) {
+			for(int i = 0; i < prefetch_urls.length; i ++) {
+				//System.out.println("register prefetch url=" + prefetch_urls[i]);
+				login.registerPrefetchURL(prefetch_urls[i]);
+			}
+		}
+		
 		registerHandler(login);
 		registerHandler(new MAGLogout());
 
@@ -122,6 +133,10 @@ public abstract class MAGServer extends HttpServlet
 	}
 
 	protected abstract IMAGHandler[] getHandlers();
+	
+	protected MAGLinkURL[] getPrefetchURLs() {
+		return null;
+	}
 
 	// /////////////////////
 
@@ -185,6 +200,7 @@ public abstract class MAGServer extends HttpServlet
 			resp.setContentType(DEFAULT_CONTENT_TYPE);
 			req.error("No handler specified, please check _action parameter!");
 			resp.addHeader("X-Anhe-MAG-Result", "FALSE");
+			resp.setContentLength(req.getResponse().length());
 			resp.getWriter().print(req.getResponse());
 		} 
 		else if (_default_handler != null || _handler_table.containsKey(req.getHandle())) 
@@ -205,6 +221,7 @@ public abstract class MAGServer extends HttpServlet
 				if (null == req.getContentType()) 
 				{
 					resp.setContentType(DEFAULT_CONTENT_TYPE);
+					resp.setCharacterEncoding("UTF-8");
 				} 
 				else 
 				{
@@ -222,7 +239,6 @@ public abstract class MAGServer extends HttpServlet
 						
 						resp.addHeader("X-Anhe-Content-Encoding", "gzip");
 						compressed = true;
-						
 					}
 					
 					if (req.isCacheable() && !req.isRequestByPushServer() && MAGConfig.getPushEngineURI() != null) 
@@ -235,11 +251,13 @@ public abstract class MAGServer extends HttpServlet
 					
 					if(!compressed) 
 					{
+						resp.setContentLength(req.getResponse().length());
 						resp.getWriter().print(req.getResponse());
 					}
 					else 
 					{
 						byte[] obytes = Compress(req.getResponse(), compressed);
+						resp.setContentLength(obytes.length);
 						ServletOutputStream output = resp.getOutputStream();
 						try 
 						{
@@ -261,6 +279,7 @@ public abstract class MAGServer extends HttpServlet
 				else 
 				{
 					byte[] obytes = req.getResponseBinary();
+					resp.setContentLength(obytes.length);
 					ServletOutputStream output = resp.getOutputStream();
 					try 
 					{
@@ -284,6 +303,7 @@ public abstract class MAGServer extends HttpServlet
 			{
 				resp.setContentType(DEFAULT_CONTENT_TYPE);
 				resp.addHeader("X-Anhe-MAG-Result", "FALSE");
+				resp.setContentLength(req.getResponse().length());
 				resp.getWriter().print(req.getResponse());
 			}
 		} 
@@ -292,6 +312,7 @@ public abstract class MAGServer extends HttpServlet
 			resp.setContentType(DEFAULT_CONTENT_TYPE);
 			req.error("No registered handler for " + req.getHandle());
 			resp.addHeader("X-Anhe-MAG-Result", "FALSE");
+			resp.setContentLength(req.getResponse().length());
 			resp.getWriter().print(req.getResponse());
 		}
 	}
