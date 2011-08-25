@@ -449,7 +449,11 @@ public class MAGRequest
 
 	public String getUsername()
 	{
-		return __username;
+		if(__username == null) {
+			return "";
+		}else {
+			return __username;
+		}
 	}
 	
 	public void setUsername(String user) {
@@ -458,7 +462,11 @@ public class MAGRequest
 
 	public String getPassword()
 	{
-		return __password;
+		if(__password == null) {
+			return "";
+		}else {
+			return __password;
+		}
 	}
 
 	public void enableGZip()
