@@ -37,6 +37,7 @@ public class MAGRequest
 	private boolean __touch_enabled = false;
 	private boolean __navigation_enabled = false;
 	private int __screen_width = 320;
+	private int __screen_height = 240;
 
 	private HttpServletRequest _request = null;
 
@@ -103,6 +104,9 @@ public class MAGRequest
 			}
 			if (vals.length > 9) {
 				__screen_width = Integer.parseInt(vals[9]);
+			}
+			if (vals.length > 10) {
+				__screen_height = Integer.parseInt(vals[10]);
 			}
 		}
 
@@ -490,6 +494,10 @@ public class MAGRequest
 	
 	public int getScreenWidth() {
 		return __screen_width;
+	}
+	
+	public int getScreenHeight() {
+		return __screen_height;
 	}
 	
 	public void setUsername(String user) {

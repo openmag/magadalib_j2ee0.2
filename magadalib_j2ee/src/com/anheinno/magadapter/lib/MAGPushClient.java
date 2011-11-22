@@ -184,7 +184,8 @@ public class MAGPushClient
 			JSONObject ret = __register_device(req.getModule(), req.getUsername(), req.getPassword(), req.getPIN(),
 					req.getDevice(), req.getSoftwareVersion(), req.getPlatformVersion(),
 					req.getPushServer(), req.getPushProtocol(), req.getIMSI(), req.getOS(),
-					req.isTouchEnabled(), req.isNavigationEnabled(), req.getScreenWidth());
+					req.isTouchEnabled(), req.isNavigationEnabled(), req.getScreenWidth(),
+					req.getScreenHeight());
 			
 			if (ret != null)
             {
@@ -205,7 +206,7 @@ public class MAGPushClient
 
 	private static JSONObject __register_device(String module, String user, String passwd, String pin, 
 			String device, String software, String platform, String mdsserver, String protocol, 
-			String imsi, String os, boolean is_touch, boolean is_nav, int screen_width)
+			String imsi, String os, boolean is_touch, boolean is_nav, int screen_width, int screen_height)
 	{
 		Hashtable<String, String> query = new Hashtable<String, String>();
 		query.put("_action", "REGIST");
@@ -223,6 +224,7 @@ public class MAGPushClient
         query.put("_touch", (is_touch? "touch":"keyboard"));
         query.put("_nav", (is_nav? "nav":"nonav"));
         query.put("_screen_width", "" + screen_width);
+        query.put("_screen_height", "" + screen_height);
                 		
 		String result = post(MAGConfig.getPushEngineURI(), query);
 		if (result != null)
