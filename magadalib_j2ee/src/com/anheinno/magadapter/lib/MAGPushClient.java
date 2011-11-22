@@ -60,8 +60,9 @@ public class MAGPushClient
 			String res = post(MAGConfig.getPushEngineURI(), query);
 			MAGLog.log(MAGConfig.getPushEngineURI() + "?" + buildQuery(query) + " GET=" + res);
 			return res;
+		}else {
+			return req.getUsername();
 		}
-		return null;
 	}
 
 	private static String buildQuery(Hashtable<String, String> param)
