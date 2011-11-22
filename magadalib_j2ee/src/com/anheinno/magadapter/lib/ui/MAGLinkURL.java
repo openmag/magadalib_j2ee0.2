@@ -102,14 +102,14 @@ public class MAGLinkURL
 		return this;
 	}
 
-	protected JSONObject getClassParams()
+	protected String getClassParams()
 	{
 		try
 		{
 			JSONObject obj = new JSONObject();
 			obj.put("class", _handler);
 			obj.put("params", _class_params);
-			return obj;
+			return obj.toString();
 		}
 		catch (final Exception e)
 		{
