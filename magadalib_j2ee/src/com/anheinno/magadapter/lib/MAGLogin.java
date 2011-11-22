@@ -76,7 +76,7 @@ public class MAGLogin implements IMAGHandler
 		{
 			if (_authenticator != null)
 			{
-				MAGLinkURL redirect = _authenticator.authenticate(req.getUsername(), req.getPIN(), req.getPassword());
+				MAGLinkURL redirect = _authenticator.authenticate(req);
 				if (redirect != null)
 				{
 					JSONObject config = null;

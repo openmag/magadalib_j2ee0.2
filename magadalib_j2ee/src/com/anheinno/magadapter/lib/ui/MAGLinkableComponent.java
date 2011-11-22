@@ -3,31 +3,10 @@ package com.anheinno.magadapter.lib.ui;
 public abstract class MAGLinkableComponent extends MAGComponent
 {
 
-	public enum MAGLinkTarget implements StringEnum
-	{
-		LINK_TARGET_SELF("__self_"), 
-		LINK_TARGET_NEW("__new_"), 
-		LINK_TARGET_BROWSER("__browser_"), 
-		LINK_TARGET_CUSTOMCONTROL("__custom_control_"), 
-		LINK_TARGET_SCRIPT("__script_");
-
-		private final String _target;
-
-		private MAGLinkTarget(String target)
-		{
-			_target = target;
-		}
-
-		public String toString()
-		{
-			return _target;
-		}
-	}
-
 	protected MAGLinkableComponent(String title, MAGLinkURL link, MAGLinkTarget target, String id)
 	{
 		super(title, id);
-		setAttr("_target", target);
+		setAttr("_target", target.toString());
 		if (target == MAGLinkTarget.LINK_TARGET_CUSTOMCONTROL)
 		{
 			setAttr("_link", link.getClassParams());

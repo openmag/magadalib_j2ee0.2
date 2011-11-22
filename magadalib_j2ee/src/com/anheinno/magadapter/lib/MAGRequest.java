@@ -33,6 +33,10 @@ public class MAGRequest
 	private Hashtable<String, String> __headers = null;
 	private boolean __gzip = false;
 	private String __ua = null;
+	private String __os = "BlackBerry";
+	private boolean __touch_enabled = false;
+	private boolean __navigation_enabled = false;
+	private int __screen_width = 320;
 
 	private HttpServletRequest _request = null;
 
@@ -83,6 +87,22 @@ public class MAGRequest
 			if (vals.length > 5)
 			{
 				__imsi = vals[5].trim();
+			}
+			if (vals.length > 6) {
+				__os = vals[6].trim();
+			}
+			if (vals.length > 7) {
+				if(vals[7].trim().equals("touch")) {
+					__touch_enabled = true;
+				}
+			}
+			if (vals.length > 8) {
+				if(vals[8].trim().equals("nav")) {
+					__navigation_enabled = true;
+				}
+			}
+			if (vals.length > 9) {
+				__screen_width = Integer.parseInt(vals[9]);
 			}
 		}
 
@@ -454,6 +474,22 @@ public class MAGRequest
 		}else {
 			return __username;
 		}
+	}
+	
+	public String getOS() {
+		return __os;
+	}
+	
+	public boolean isTouchEnabled() {
+		return __touch_enabled;
+	}
+	
+	public boolean isNavigationEnabled() {
+		return __navigation_enabled;
+	}
+	
+	public int getScreenWidth() {
+		return __screen_width;
 	}
 	
 	public void setUsername(String user) {

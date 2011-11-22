@@ -5,6 +5,6 @@ import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 
 public interface IMAGAuthenticator
 {
-	MAGLinkURL authenticate(String username, String pin, String password);
+	MAGLinkURL authenticate(MAGRequest req);
 }
 

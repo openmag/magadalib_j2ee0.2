@@ -3,6 +3,7 @@ package com.apps.anheinno.demo;
 import com.anheinno.magadapter.lib.IMAGAuthenticator;
 import com.anheinno.magadapter.lib.IMAGHandler;
 import com.anheinno.magadapter.lib.MAGConfig;
+import com.anheinno.magadapter.lib.MAGRequest;
 import com.anheinno.magadapter.lib.MAGServer;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
 import javax.servlet.annotation.WebInitParam;
@@ -13,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
 		initParams = {
 		@WebInitParam(name = "log", value = "log"),
 		@WebInitParam(name = "expire", value = "72"),
-		@WebInitParam(name = "push-uri", value = "http://192.168.0.201/MAGLIBv0.4/magserver/pushserv/pushengine.php"),
+		@WebInitParam(name = "push-uri", value = "http://10.168.44.254/MAGLIBv0.4/magserver/pushserv/pushengine.php"),
 		@WebInitParam(name = "compress-auto", value = "false"),
 		@WebInitParam(name = "compress-threshold", value = "8192") 
 		})
@@ -26,11 +27,15 @@ public class Services extends MAGServer
 	{
 		return new IMAGAuthenticator()
 		{
-			public MAGLinkURL authenticate(String username, String pin, String password)
+			public MAGLinkURL authenticate(MAGRequest req)
 			{
-				if (username != null && username.equals("admin") && password != null && password.equals("123"))
+				if (req.getUsername() != null && req.getUsername().equals("admin") && req.getPassword() != null && req.getPassword().equals("123"))
 				{
-					return (new MAGLinkURL().setHandler("MAINSCREEN"));
+					if(req.getScreenWidth() > 640) {
+						return (new MAGLinkURL().setHandler("FRAMESCREEN"));
+					}else {
+						return (new MAGLinkURL().setHandler("MAINSCREEN"));
+					}
 				}
 				else 
 				{
@@ -55,6 +60,8 @@ public class Services extends MAGServer
 	{
 		return new IMAGHandler[]
 		{
+			new FrameScreen(),
+			new MainScreenPad(),
 			new MainScreen(),
 			new Screen1(),
 			new Screen2(),

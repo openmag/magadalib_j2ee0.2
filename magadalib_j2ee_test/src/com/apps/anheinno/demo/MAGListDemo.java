@@ -7,7 +7,7 @@ import com.anheinno.magadapter.lib.ui.MAGDocument;
 import com.anheinno.magadapter.lib.ui.MAGInputList;
 import com.anheinno.magadapter.lib.ui.MAGLink;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
-import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
+import com.anheinno.magadapter.lib.ui.MAGLinkTarget;
 import com.anheinno.magadapter.lib.ui.MAGList;
 import com.anheinno.magadapter.lib.ui.MAGList.MAGListOrderFieldSet;
 import com.anheinno.magadapter.lib.ui.MAGList.MAGListOrderFieldType;

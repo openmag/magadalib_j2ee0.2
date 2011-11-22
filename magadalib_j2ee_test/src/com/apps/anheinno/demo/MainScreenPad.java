@@ -9,13 +9,13 @@ import com.anheinno.magadapter.lib.ui.MAGLinkTarget;
 import com.anheinno.magadapter.lib.ui.MAGMenuItem;
 import com.anheinno.magadapter.lib.ui.MAGStyle;
 
-public class MainScreen implements IMAGHandler
+public class MainScreenPad implements IMAGHandler
 {
 	private static final int DEFAULT_EXPIRE = 72*24;
 
 	public String getAction()
 	{
-		return "MAINSCREEN";
+		return "MAINSCREENPAD";
 	}
 
 	public boolean process(MAGRequest req)
@@ -59,7 +59,7 @@ public class MainScreen implements IMAGHandler
 		style.setBorder(5, null);
 		style.setHeight(60);
 
-		MAGLink btn1 = new MAGLink("文档一Test", (new MAGLinkURL()).setHandler("SCREEN1").addParam("flag", "中文").setNotify(true).setSaveHistory(false));
+		MAGLink btn1 = new MAGLink("文档一Test", (new MAGLinkURL()).setHandler("SCREEN1").addParam("flag", "中文").setNotify(true).setSaveHistory(false), new MAGLinkTarget("_content"));
 		btn1.setClass("imgbtn_style");
 		btn1.setHint("Document 1 shows some useful information.\nTooltip ....\nToootip ....\n12312312\n123123\n");
 		btn1.setStatus("Document 1 get focus!");
@@ -69,21 +69,22 @@ public class MainScreen implements IMAGHandler
 		btn2_style.setStyle("hint-text-style", "font-scale=2.0 text-align=right padding=20");
 		btn2_style.setStyle("hint-border-width", "0");
 		btn2_style.setStyle("hint-background-transparent", "true");
-		MAGLink btn2 = new MAGLink("文档二", (new MAGLinkURL()).setHandler("SCREEN2").setExpireHours(DEFAULT_EXPIRE).setNotify(true));
+		
+		MAGLink btn2 = new MAGLink("文档二", (new MAGLinkURL()).setHandler("SCREEN2").setExpireHours(DEFAULT_EXPIRE).setNotify(true), new MAGLinkTarget("_content"));
 		btn2.setClass("imgbtn_style");
 		btn2.setStyle(btn2_style);
 		btn2.setHint("这是浮动消息窗口，焦点停留一段时间后就会自动弹出。");
 		doc.addChild(btn2);
 
-		MAGLink btn3 = new MAGLink("报价单", (new MAGLinkURL()).setHandler("QUOTATION").setExpireHours(DEFAULT_EXPIRE).setNotify(false));
+		MAGLink btn3 = new MAGLink("报价单", (new MAGLinkURL()).setHandler("QUOTATION").setExpireHours(DEFAULT_EXPIRE).setNotify(false), new MAGLinkTarget("_content"));
 		btn3.setStyle(style);
 		doc.addChild(btn3);
 
-		MAGLink btn4 = new MAGLink("只读组件", (new MAGLinkURL()).setHandler("SCREEN_READONLY").setExpireHours(DEFAULT_EXPIRE));
+		MAGLink btn4 = new MAGLink("只读组件", (new MAGLinkURL()).setHandler("SCREEN_READONLY").setExpireHours(DEFAULT_EXPIRE), new MAGLinkTarget("_content"));
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
-		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLISTEXAMPLE").setExpireHours(DEFAULT_EXPIRE));
+		btn4 = new MAGLink("MAGList示例", (new MAGLinkURL()).setHandler("MAGLISTEXAMPLE").setExpireHours(DEFAULT_EXPIRE), new MAGLinkTarget("_content"));
 		btn4.setStyle(style);
 		doc.addChild(btn4);
 
@@ -112,10 +113,10 @@ public class MainScreen implements IMAGHandler
 		menu = new MAGMenuItem("Info Grid Demo", (new MAGLinkURL()).setHandler("INFOGRIDDEMO").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
 		doc.addChild(menu);
 		
-		MAGMenuItem tieredselectdemo = new MAGMenuItem("TieredSelected Demo", new MAGLinkURL().setHandler("MAGTIEREDSELECTDEMO"));
+		MAGMenuItem tieredselectdemo = new MAGMenuItem("TieredSelected Demo", new MAGLinkURL().setHandler("MAGTIEREDSELECTDEMO"), new MAGLinkTarget("_content"));
 		doc.addChild(tieredselectdemo);
 		
-		MAGMenuItem keywordfilterselect = new MAGMenuItem("KeywordsFilterSelect Demo", new MAGLinkURL().setHandler("MAGKEYWORDFILTERSELECTDEMO"));
+		MAGMenuItem keywordfilterselect = new MAGMenuItem("KeywordsFilterSelect Demo", new MAGLinkURL().setHandler("MAGKEYWORDFILTERSELECTDEMO"), new MAGLinkTarget("_content"));
 		doc.addChild(keywordfilterselect);
 		
 		//MAGLog.log(doc.toString());

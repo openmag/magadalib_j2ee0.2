@@ -74,10 +74,18 @@ public class MAGStyle extends JSONObject
 	{
 		setStyle("width", width);
 	}
+	
+	public void setWidthRestOfScreen() {
+		setStyle("width", "*");
+	}
 
 	public void setHeight(int height)
 	{
 		setStyle("height", height);
+	}
+	
+	public void setHeightRestOfScreen() {
+		setStyle("height", "*");
 	}
 
 	public void setIWidth(String iw)

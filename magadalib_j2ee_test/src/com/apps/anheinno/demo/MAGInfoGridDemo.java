@@ -9,7 +9,7 @@ import com.anheinno.magadapter.lib.ui.MAGInfoGridData;
 import com.anheinno.magadapter.lib.ui.MAGInfoGridDataSet;
 import com.anheinno.magadapter.lib.ui.MAGInfoGridFieldSet;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
-import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
+import com.anheinno.magadapter.lib.ui.MAGLinkTarget;
 
 
 public class MAGInfoGridDemo implements IMAGHandler

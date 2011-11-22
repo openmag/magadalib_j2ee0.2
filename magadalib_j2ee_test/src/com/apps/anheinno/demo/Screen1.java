@@ -13,7 +13,7 @@ import com.anheinno.magadapter.lib.ui.MAGInputCombo;
 import com.anheinno.magadapter.lib.ui.MAGInputDuplicator;
 import com.anheinno.magadapter.lib.ui.MAGLink;
 import com.anheinno.magadapter.lib.ui.MAGLinkURL;
-import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
+import com.anheinno.magadapter.lib.ui.MAGLinkTarget;
 import com.anheinno.magadapter.lib.ui.MAGMenuItem;
 import com.anheinno.magadapter.lib.ui.MAGMultiselect;
 import com.anheinno.magadapter.lib.ui.MAGNote;

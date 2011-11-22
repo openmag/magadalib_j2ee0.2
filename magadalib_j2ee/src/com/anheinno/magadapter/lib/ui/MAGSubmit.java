@@ -7,20 +7,20 @@ public class MAGSubmit extends MAGInputBase
 
 	public MAGSubmit(String title, String action, MAGLinkURL url)
 	{
-		this(title, action, url, MAGLinkableComponent.MAGLinkTarget.LINK_TARGET_SELF, null);
+		this(title, action, url, MAGLinkTarget.LINK_TARGET_SELF, null);
 	}
 
-	public MAGSubmit(String title, String action, MAGLinkURL url, MAGLinkableComponent.MAGLinkTarget target)
+	public MAGSubmit(String title, String action, MAGLinkURL url, MAGLinkTarget target)
 	{
 		this(title, action, url, target, null);
 	}
 
-	public MAGSubmit(String title, String action, MAGLinkURL url, MAGLinkableComponent.MAGLinkTarget target, String id)
+	public MAGSubmit(String title, String action, MAGLinkURL url, MAGLinkTarget target, String id)
 	{
 		super(title, id, "");
 		setAttr("_action", action);
 		setAttr("_url", url.getURL());
-		setAttr("_target", target);
+		setAttr("_target", target.toString());
 	}
 
 	public void setConfirm(String msg)

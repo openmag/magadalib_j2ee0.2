@@ -2,7 +2,6 @@ package com.anheinno.magadapter.lib.ui;
 
 import org.json.lite.JSONObject;
 
-import com.anheinno.magadapter.lib.ui.MAGLinkableComponent.MAGLinkTarget;
 
 public class MAGInfoGridData extends JSONObject
 {
