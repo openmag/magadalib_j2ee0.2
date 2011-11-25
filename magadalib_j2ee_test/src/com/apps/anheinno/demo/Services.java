@@ -27,9 +27,9 @@ public class Services extends MAGServer
 	{
 		return new IMAGAuthenticator()
 		{
-			public MAGLinkURL authenticate(MAGRequest req)
+			public MAGLinkURL authenticate(String username, String password, MAGRequest req)
 			{
-				if (req.getUsername() != null && req.getUsername().equals("admin") && req.getPassword() != null && req.getPassword().equals("123"))
+				if (username != null && username.equals("admin") && password != null && password.equals("123"))
 				{
 					if(req.getScreenWidth() > 640) {
 						return (new MAGLinkURL().setHandler("FRAMESCREEN"));
