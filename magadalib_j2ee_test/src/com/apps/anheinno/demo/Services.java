@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
 		initParams = {
 		@WebInitParam(name = "log", value = "log"),
 		@WebInitParam(name = "expire", value = "72"),
-		@WebInitParam(name = "push-uri", value = "http://10.168.44.254/MAGLIBv0.4/magserver/pushserv/pushengine.php"),
+		@WebInitParam(name = "push-uri", value = "http://10.168.44.254/MAGLIBv0.5/magserver/pushserv/pushengine.php"),
 		@WebInitParam(name = "compress-auto", value = "false"),
 		@WebInitParam(name = "compress-threshold", value = "8192") 
 		})
@@ -75,7 +75,8 @@ public class Services extends MAGServer
 			new SubmitInputlist(),
 			new MAGTieredSelectDemo(),
 			new MAGKeywordFilterSelectDemo(),
-			new SubmitResult()
+			new SubmitResult(),
+			new LayoutTest()
 		};
 	}
 

@@ -103,6 +103,10 @@ public class MainScreenPad implements IMAGHandler
 		btn6.setStyle(style);
 		btn6.setHint("To create new appointment!\nThis is a brand new function, please try it. You will not disappoint!!!");
 		doc.addChild(btn6);
+		
+		MAGLink btn7 = new MAGLink("任意位置测试", (new MAGLinkURL()).setHandler("LAYOUTTEST").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
+		btn7.setStyle(style);
+		doc.addChild(btn7);
 
 		MAGMenuItem menu = new MAGMenuItem("访问新浪网", new MAGLinkURL("http://www.sina.com.cn").setExpireHours(0), MAGLinkTarget.LINK_TARGET_BROWSER);
 		doc.addChild(menu);

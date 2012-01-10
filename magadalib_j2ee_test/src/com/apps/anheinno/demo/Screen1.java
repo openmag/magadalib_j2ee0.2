@@ -184,15 +184,24 @@ public class Screen1 implements IMAGHandler
 		
 		doc.addChild(panel2);
 		
+		MAGStyle filelink_style = new MAGStyle();
+		filelink_style.setStyle("text-style", "color=black");
+		filelink_style.setStyle("visited-text-style", "color=red");
+		
 		MAGFileLink download1 = new MAGFileLink("Word下载测试", "", new MAGLinkURL("http://192.168.0.201/download/aog.doc"));
+		download1.setStyle(filelink_style);
 		doc.addChild(download1);
 		MAGFileLink download2 = new MAGFileLink("Excel下载测试", "", new MAGLinkURL("http://192.168.0.201/download/citics_txl.xls"));
+		download2.setStyle(filelink_style);
 		doc.addChild(download2);
 		MAGFileLink download3 = new MAGFileLink("PowerPoint下载测试", "", new MAGLinkURL("http://192.168.0.201/download/anheintro.ppt"));
+		download3.setStyle(filelink_style);
 		doc.addChild(download3);
 		MAGFileLink download4 = new MAGFileLink("Pdf下载测试", "", new MAGLinkURL("http://192.168.0.201/download/exim.pdf"));
+		download4.setStyle(filelink_style);
 		doc.addChild(download4);
 		MAGFileLink download5 = new MAGFileLink("Pdf下载测试(<256K)", "", new MAGLinkURL("http://192.168.0.201/download/aw_overview.pdf"));
+		download5.setStyle(filelink_style);
 		doc.addChild(download5);
 		
 		MAGMenuItem menu = new MAGMenuItem("报价单", new MAGLinkURL().setHandler("QUOTATION").setExpireHours(DEFAULT_EXPIRE), MAGLinkTarget.LINK_TARGET_NEW);
